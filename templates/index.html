@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscador De Vuelos</title>
+    <link href="{% static "css/bootstrap-responsive.css" %}" rel="stylesheet">
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+    <link href="{% static "bootstrap-icons-1.9.1" %}" rel="stylesheet">
+    <script src="{% static 'base/js/jquery.min.js' %}"></script>
+
+</head>
+  <body>
+    <h1>Busca en cientos de webs de vuelos a la vez. </h1>
+
+    <form action="{% url 'search' %}" method="post">
+    {% csrf_token %}
+    <div class="container" style="margin-left: 0px">
+        <select class="form-select" aria-label="Default select example" name="tipo_viaje" id="tipo_de_viaje">
+            <option selected></option>
+            <option value="Solo ida">Solo Ida</option>
+            <option value="Ida y vuelta">Ida y vuelta</option>
+            <option value="Multidestino">Multidestino</option>
+        </select>
+        <select class="form-select" aria-label="Default select example" name="cantidad_viajeros" id="cantidad_viajeros">
+            <option selected></option>
+            <option value="1">1 Viajero</option>
+            <option value="2">2 Viajeros</option>
+            <option value="3">3 viajeros</option>
+        </select>
+        <select class="form-select" aria-label="Default select example" name="clase">
+            <option selected></option>
+            <option value="Economica">Economica</option>
+            <option value="Negocio">Negocio</option>
+            <option value="Primera">Primera</option>
+        </select>
+    </div>
+        <div style="margin-left: 0px">
+            <!--Origen-->
+              <img src="../static/bootstrap-icons-1.9.1/airplane-fill.svg" alt="Bootstrap">
+              <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Desde" style="margin-top:10px"
+              name="origen">
+
+            <!-- Destinos-->
+              <img src="../static/bootstrap-icons-1.9.1/airplane-fill.svg" alt="Bootstrap" style="transform:rotate(180deg)">
+              <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Hasta?" style="margin-top:10px"
+              name="destino">
+
+            <!--Calendarios de vuelos-->
+              <input type="date" class="form-control" id="exampleFormControlInput1" style="margin-top:10px" name="fecha_salida" title="FECHA SALIDA">
+
+              <input type="date" class="form-control" id="exampleFormControlInput1" style="margin-top:10px" name="fecha_regreso" title="FECHA REGRESO">
+
+            <!--Boton Buscar-->
+            <button type="submit" class="btn btn-success" id="button_search" >
+                <img src="../static/bootstrap-icons-1.9.1/search.svg" alt="Bootstrap" style="">
+            </button>
+        </div>
+    </form>
+    {% if mpos %}
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading"> {{ listadato }} Vuelos Encontrados!</h4>
+            <hr>
+            <p class="mb-0">Le agradecemos que utilice nuestros servicios.Que tenga un buen Viaje.</p>
+            </div>
+    {% endif %}
+    {% if mnega %}
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Vuelo No Encontrado!</h4>
+            <br>
+               Lo Sentimos no pudimos encontrar un viaje de acuerdo con los requerimientos que usted necesita.
+            <hr>
+            </div>
+    {% endif %}
+    {% if merr %}
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">{{merr}}!</h4>
+            <br>
+                Lo Sentimos no pudimos encontrar un viaje de acuerdo con los requerimientos que usted necesita.
+            <hr>
+        </div>
+    {% endif %}
+  </body>
+</html>
